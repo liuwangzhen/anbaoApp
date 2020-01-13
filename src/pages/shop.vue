@@ -1,11 +1,17 @@
 <template>
   <div class="pagepb">
     
-    <van-nav-bar :border="false" title="蒙多，想买啥就买啥"></van-nav-bar>
+    <van-nav-bar :border="false" title="商城"></van-nav-bar>
     <van-search placeholder="请输入商品名" shape="round" v-model="value" show-action>
       <div slot="action" @click="onSearch">搜索</div>
     </van-search>
+    
+
+
+    <van-tabs v-model="this.$store.state.shopActiveIdx" @click="onClick" :right-width="0" :left-width="0">
+      <van-tab v-bind:key="i" :title="n" v-for="(n,i) in titles">
     <div class="bgf5f listbody">
+      <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
       <div class="row fwrap">
         <div
           @click="goDetail(item)"
@@ -29,12 +35,17 @@
           src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3371901284,1995735291&fm=26&gp=0.jpg"
         />
       </van-dialog>
+      </van-pull-refresh>
     </div>
+
+      </van-tab>
+    </van-tabs>
     <van-tabbar v-model="active2" fixed>
       <van-tabbar-item to="/first" icon="home-o">首页</van-tabbar-item>
       <van-tabbar-item icon="cart-o">商城</van-tabbar-item>
       <van-tabbar-item to="/mine" icon="user-o">我的</van-tabbar-item>
     </van-tabbar>
+    
   </div>
 </template>
 
@@ -42,6 +53,8 @@
 export default {
   data: function() {
     return {
+      count: 0,
+      isLoading: false,
       value: "",
       active2: 1,
       show: false,
@@ -86,17 +99,28 @@ export default {
           saleNumber: 9821,
           timeover: "2019-8-6"
         }
-      ]
+      ],
+      titles: ["头盔", "防暴盾", "手电筒", "电棍", "夜视仪"],
     };
   },
   methods: {
     onSearch: function() {
       this.show = true;
     },
+     onRefresh() {
+      setTimeout(() => {
+        this.$toast('刷新成功');
+        this.isLoading = false;
+        this.count++;
+      }, 1000);
+    },
     goDetail: function(e) {
       localStorage.setItem("shops", JSON.stringify(e));
       this.$router.push({ path: "/shopdetail" });
-    }
+    },
+    onClick(index) {
+      this.$store.state.shopActiveIdx = index
+      }
   }
 };
 </script>

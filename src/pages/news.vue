@@ -23,7 +23,7 @@
                     <div class="f12 lh30 ml5">{{item.author}}</div>
                     <div class="abs row zan lh30">
                       <van-icon class="lh30" size="16" name="like-o"></van-icon>
-                      <van-icon class-prefix="iconfont" name="liulan" />
+                      <van-icon class-prefix="iconfont" name="icon-liulan" />
                       <div class="f12 ml5">{{item.like}}</div>
                     </div>
                     
@@ -191,7 +191,7 @@ export default {
 </script>
 <style scoped>
 /*导航*/
-/* @import '../css/iconfont.css'; */
+/* @import '/css/iconfont.css'; */
 .top-fix {
   position: fixed;
   z-index: 114;
